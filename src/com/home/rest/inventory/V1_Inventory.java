@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.codehaus.jettison.json.JSONArray;
 
@@ -19,8 +20,8 @@ import com.home.utilites.ToJson;
 public class V1_Inventory {
 	
 	@GET
-	@Produces(MediaType.TEXT_HTML)  
-	public String returnAllPcParts(){
+	@Produces(MediaType.APPLICATION_JSON)  
+	public Response returnAllPcParts(){
 		
 		//System.out.println("Here");
 		
@@ -28,6 +29,8 @@ public class V1_Inventory {
 		
 		String returnString = null;
 		Connection conn = null;
+		
+		Response rb = null;
 		
 		try{
 			conn = OracleHome.DataSourceConn().getConnection();
@@ -42,6 +45,8 @@ public class V1_Inventory {
 			query.close();
 			
 			returnString = array.toString();
+			
+			rb = Response.ok(returnString).build();
 		}
 		
 		catch(Exception e){
@@ -58,7 +63,7 @@ public class V1_Inventory {
 			}
 		}
 		
-		return returnString;
+		return rb;
 
 	}
 }
