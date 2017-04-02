@@ -20,7 +20,16 @@ import com.home.utilites.ToJson;
 public class V1_Inventory {
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)  
+	@Produces(MediaType.APPLICATION_JSON) 
+	
+	/*
+	 * Return value of data from DB
+	 */
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Response returnAllPcParts(){
 		
 		

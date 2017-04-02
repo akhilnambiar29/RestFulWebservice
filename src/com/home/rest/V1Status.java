@@ -33,6 +33,11 @@ public class V1Status {
 	@Path("/database")
 	@GET
 	@Produces(MediaType.TEXT_HTML)
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDatabaseStatus(){
 		
 		PreparedStatement query = null;

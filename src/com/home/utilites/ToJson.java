@@ -1,3 +1,9 @@
+/**
+ * This class gives a JSON output
+ * @author Akhil
+ * @version 1.0
+ */
+
 package com.home.utilites;
 
 import java.sql.ResultSet;
@@ -9,6 +15,13 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 public class ToJson {
+	/**
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 * @throws JSONException
+	 */
 
 	public JSONArray toJSONArray(ResultSet rs) throws SQLException, JSONException{
 		

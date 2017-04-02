@@ -8,6 +8,9 @@ public class OracleHome {
 	private static DataSource datasource = null;
 	private static Context context = null;
 	
+	/*
+	 * Get value of JNDI configured in the server.
+	 */
 	public static DataSource DataSourceConn(){
 		
 		if(datasource!=null){
