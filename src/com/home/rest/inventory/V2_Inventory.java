@@ -138,4 +138,66 @@ public Response returnBrandPartsPath(@PathParam("brand")String brand){
 		return Response.ok(returnString).build();
 
 }	
+	
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON) 
+	@Path("/{brand}/{item_number}")
+public Response returnBrandPartsPathTwo(@PathParam("brand")String brand , @PathParam("item_number")String item_number){
+		
+		
+		System.out.println("Here brand:" + brand + " " + item_number + "?");
+		
+		PreparedStatement query = null;
+		
+		String returnString = null;
+		Connection conn = null;
+		
+		//Response rb = null;
+		
+		try{
+			
+			if(brand == null || item_number == null ){
+				return Response.status(400).entity("Please specify a brand/item name").build();
+			}
+			conn = OracleHome.DataSourceConn().getConnection();
+			query = conn.prepareStatement("Select * from PC_PARTS where PC_PARTS_MAKER=? and PC_PARTS_TITLE=?");
+			
+			query.setString(1, brand);
+			query.setString(2, item_number);
+			
+			ResultSet rs = query.executeQuery();
+			
+			System.out.println("Here as well");
+			
+			ToJson converter = new ToJson();
+			JSONArray array = new JSONArray(); 
+			
+			array = converter.toJSONArray(rs);
+			query.close();
+			
+			returnString = array.toString();
+			
+			//rb = Response.ok(returnString).build();
+}
+		
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return Response.status(500).entity("Server was unable to process the request").build();
+				}
+			}
+		}
+		
+		return Response.ok(returnString).build();
+
+}	
+	
 }
