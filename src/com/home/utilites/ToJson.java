@@ -26,6 +26,10 @@ public class ToJson {
 	public JSONArray toJSONArray(ResultSet rs) throws SQLException, JSONException{
 		
 		
+		/**
+		 * 
+		 */
+		
 		JSONArray json = new JSONArray();
 	    ResultSetMetaData rsmd = rs.getMetaData();
 

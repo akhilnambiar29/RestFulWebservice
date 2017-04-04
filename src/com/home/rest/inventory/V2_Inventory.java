@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -16,21 +17,13 @@ import org.codehaus.jettison.json.JSONArray;
 import com.home.dao.OracleHome;
 import com.home.utilites.ToJson;
 
-@Path("/v1/inventory")
-public class V1_Inventory {
+@Path("/v2/inventory")
+public class V2_Inventory {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON) 
 	
-	/*
-	 * Return value of data from DB
-	 */
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Response returnAllPcParts(){
+public Response returnBrandParts(@QueryParam("brand")String brand){
 		
 		
 		//System.out.println("Here");
@@ -44,7 +37,9 @@ public class V1_Inventory {
 		
 		try{
 			conn = OracleHome.DataSourceConn().getConnection();
-			query = conn.prepareStatement("select * from PC_PARTS");
+			query = conn.prepareStatement("Select * from PC_PARTS where PC_PARTS_MAKER=?");
+			
+			query.setString(1, brand);
 			
 			ResultSet rs = query.executeQuery();
 			
@@ -57,7 +52,7 @@ public class V1_Inventory {
 			returnString = array.toString();
 			
 			rb = Response.ok(returnString).build();
-		}
+}
 		
 		catch(Exception e){
 			e.printStackTrace();
@@ -74,7 +69,7 @@ public class V1_Inventory {
 			}
 		}
 		
-		return rb;
+		return Response.ok(rb).build();
 
-	}
+}
 }
