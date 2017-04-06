@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -207,9 +208,10 @@ public Response returnBrandPartsPathTwo(@PathParam("brand")String brand , @PathP
 	@Produces(MediaType.APPLICATION_JSON) 
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/insert")
-public Response InsertIntoValues(String formdata){
+public Response InsertIntoValues(@FormParam("PC_PARTS_PK")String parts_pk , @FormParam("PC_PARTS_TITLE")String parts_title ,
+		@FormParam("PC_PARTS_CODE")String parts_code , @FormParam("PC_PARTS_MAKER")String parts_maker , @FormParam("PC_PARTS_AVAIL")String parts_avail ){
 		
-		System.out.println("Data"+ formdata);
+		//System.out.println("Data"+ formdata);
 		
 	//	System.out.println("Here brand:" + brand + " " + item_number + "?");
 		
@@ -223,8 +225,8 @@ public Response InsertIntoValues(String formdata){
 		//Response rb = null;
 		
 		try{
-			ObjectMapper objmapper = new ObjectMapper();
-			ItemEntry itemEntry = objmapper.readValue(formdata, ItemEntry.class);
+			//ObjectMapper objmapper = new ObjectMapper();
+			//ItemEntry itemEntry = objmapper.readValue(formdata, ItemEntry.class);
 			
 			conn = OracleHome.DataSourceConn().getConnection();
 			query = conn.prepareStatement("INSERT INTO PC_PARTS (PC_PARTS_PK, PC_PARTS_TITLE, PC_PARTS_CODE, PC_PARTS_MAKER, PC_PARTS_AVAIL) VALUES (?,?,?,?,?)");
@@ -232,11 +234,11 @@ public Response InsertIntoValues(String formdata){
 			//query.setString(1, brand);
 			//query.setString(2, item_number);
 			
-			query.setString(1, itemEntry.PC_PARTS_PK);
-			query.setString(2, itemEntry.PC_PARTS_TITLE);
-			query.setString(3, itemEntry.PC_PARTS_CODE);
-			query.setString(4, itemEntry.PC_PARTS_MAKER);
-			query.setString(5, itemEntry.PC_PARTS_AVAIL);
+			query.setString(1, parts_pk);
+			query.setString(2, parts_title);
+			query.setString(3, parts_code);
+			query.setString(4, parts_maker);
+			query.setString(5, parts_avail);
 			
 			query.executeUpdate();
 			
